@@ -2,20 +2,15 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
 
-<!--      <el-form-item label="部门" prop="deptId">-->
-<!--        <el-select v-model="queryParams.deptId" placeholder="请选择部门" clearable size="small">-->
-<!--          <el-option-->
-<!--            v-for="item in deptData"-->
-<!--            :key="item.id"-->
-<!--            :label="item.label"-->
-<!--            :value="item.id">-->
-<!--          </el-option>-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
-
-
-      <el-form-item label="归属部门" prop="deptId">
-        <treeselect v-model="queryParams.deptId" :options="deptOptions" :disable-branch-nodes="true" :show-count="true" placeholder="请选择归属部门" />
+      <el-form-item label="部门" prop="deptId">
+        <el-select v-model="queryParams.deptId" placeholder="请选择部门" clearable size="small">
+          <el-option
+            v-for="item in deptData"
+            :key="item.id"
+            :label="item.label"
+            :value="item.id">
+          </el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="名称" prop="name">
@@ -145,21 +140,16 @@
 <!--          <el-input v-model="form.deptId" placeholder="请输入部门id" />-->
 <!--        </el-form-item>-->
 
-<!--        <el-form-item label="部门" align="center" prop="deptId" >-->
-<!--          <el-select v-model="form.label" placeholder="请选择部门" @change="selectDept">-->
-<!--            <el-option-->
-<!--              v-for="item in deptData"-->
-<!--              :key="item.id"-->
-<!--              :label="item.label"-->
-<!--              :value="item.id"-->
-<!--            />-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="归属部门" prop="deptId">-->
-<!--          <treeselect v-model="form.deptId" :options="deptOptions" :disable-branch-nodes="true" :show-count="true" placeholder="请选择归属部门" />-->
-<!--        </el-form-item>-->
-
+        <el-form-item label="部门" align="center" prop="deptId" >
+          <el-select v-model="form.label" placeholder="请选择部门" @change="selectDept">
+            <el-option
+              v-for="item in deptData"
+              :key="item.id"
+              :label="item.label"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
 
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
@@ -184,8 +174,6 @@
 import { listType, getType, delType, addType, updateType, exportType }
 from "@/api/property/type";
 import { treeselect } from "@/api/system/dept";
-import Treeselect from "@riophae/vue-treeselect";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
   name: "Type",
@@ -207,8 +195,6 @@ export default {
       total: 0,
       // 物业保修类型表格数据
       typeList: [],
-      // 部门树选项
-      deptOptions: undefined,
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -246,17 +232,11 @@ export default {
 
       // 国家查询
       treeselect().then(res => {
+        // console.log(res)
+        // console.log(res.data)
         this.deptData = res.data;
-        // console.log(response.data)
-        // this.deptOptions = response.data;
+
       })
-    },
-    /** 查询部门下拉树结构 */
-    getTreeselect() {
-      treeselect().then((response) => {
-        console.log(response.data)
-        this.deptOptions = response.data;
-      });
     },
     // 取消按钮
     cancel() {
